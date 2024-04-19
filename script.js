@@ -72,5 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   setInterval(moveghostRandomly, 900);
 
+  
   moveghostRandomly();
 });
