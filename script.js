@@ -10,13 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let screamDelay = generateScreamDelay();
   let lastGhostPosition = { x: 0, y: 0 };
+  let previousLevelScore =0;
   let score = 0;
+  let ghostMovementSpeed = 1500;
+  let movementSpeedRemovable = 100;
 
   const rangeX = stage.clientWidth - ghost.clientWidth;
   const rangeY = stage.clientHeight - ghost.clientHeight;
 
   function generateScreamDelay() {
     return Math.floor(Math.random() * 15) + 6;
+  }
+
+  function setGhostMovementSpeed() {
+    if(score-previousLevelScore===10) {
+      previousLevelScore = score;
+      ghostMovementSpeed-=movementSpeedRemovable;
+    }
   }
 
   function moveghostRandomly() {
@@ -68,9 +78,14 @@ document.addEventListener("DOMContentLoaded", function () {
       moveghostRandomly();
     }, 1000);
   }
+  setGhostMovementSpeed();
+
   ghost.addEventListener("click", disappearOnClick);
 
-  setInterval(moveghostRandomly, 900);
+  setInterval(function () {
+    moveghostRandomly();
+    setGhostMovementSpeed();
+  }, ghostMovementSpeed); 
 
   
   moveghostRandomly();
